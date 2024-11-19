@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,1,1&icon_names=account_circle");
+
+mat-sidenav{
+    width: 250px;
+}
+
+.item-link{
+    border-radius: 0!important;
+}
+.item-link::before{
+    background-color: #3a89f000!important;
+}
+
+@media screen and (max-width:500px) {
+    .item-link:active{
+        background-color: #045ccf!important;
+    }
+}
+
+.item-link:hover{
+    background-color: #3a89f0!important;
+}
+
+.active{
+    background-color: #045ccf;
+    border-left: 5px solid white;
+}
+
+::ng-deep .mat-mdc-focus-indicator{
+    background-color: rgba(255, 255, 255, 0)!important;
+}
+
+.sizeup{
+    width: 1em;
+    height: 1em;
+    font-size: 4em;
+}
+
+.nav-header{
+    padding-top: 20px;
+    text-align: center;
+}
+
+
+.nav-header .material-symbols-outlined {
+    font-size: 80px;
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 200,
+    'GRAD' 1,
+    'opsz' 48
+}
+
+.nav-header h3{
+   margin: 0;
+   font-size: 1em;
+   line-height: 1.5em;
+   font-family: Poppins;
+   font-weight: 500;
+}
+
+.nav-header p{
+    margin: 0;
+    font-size: 0.8em;
+    line-height: 1.5em;
+ }
+ 
+ .mdc-list-item--with-leading-icon.mdc-list-item{
+    padding-left:3px;
+    padding-right: 6px;
+ }

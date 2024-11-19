@@ -1,0 +1,95 @@
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+}
+
+.dashboard_header{
+    font-size: 3rem;
+}
+
+.admin_greeting .greeting_text{
+    font-size: 2rem;
+}
+
+.score_cards{
+    display: flex;
+    gap:10px;
+    width: 100%;
+}
+
+.dashboard_summary{
+    height: 100%;
+    width: 100%;
+}
+
+.card{
+    margin:0;
+    width: 100%;
+}
+
+.card-content .total-sold-items{
+    font-weight: 400;
+}
+
+.count-text{
+    padding: 0 5px ;
+}
+@media screen and (max-width:810px) {
+    .score_cards{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,2fr);
+    }
+}
+@media screen and (max-width:700px) {
+    .card .card-content{
+        padding: 10px;
+    }
+
+    .card .card-title{
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+}
+
+@media screen and (max-width:620px) {
+    .score_cards{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,2fr);
+    }
+
+
+    .dashboard_header{
+        font-size: 2.5rem;
+    }
+    
+    .admin_greeting .greeting_text{
+        font-size: 1.5rem;
+    }
+
+    .count-text{
+        padding: 0 5px ;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .score_cards{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+    }
+
+    .admin_greeting .greeting_text{
+        font-size: 1.2rem;
+        text-align: left;
+    }
+
+    .card .card-title{
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+}

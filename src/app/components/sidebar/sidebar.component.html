@@ -1,0 +1,14 @@
+<div class="nav-header">
+    <mat-icon [class.sizeup]="collapsed()" matListItemIcon> account_circle</mat-icon>
+    <h3 *ngIf="collapsed()">Name : John Doe</h3>
+    <p *ngIf="collapsed()">Position: Admin</p>
+</div>
+<mat-nav-list>
+    <a class="item-link" mat-list-item *ngFor="let item of menuItems()" routerLinkActive="active" #rla="routerLinkActive" [routerLink]="item.route">
+        <mat-icon [class.white-text]="rla.isActive"  matListItemIcon>{{item.icon}}</mat-icon>
+        <span *ngIf="collapsed()">{{item.label}}</span>
+    </a>
+</mat-nav-list>
+
+
+  

@@ -1,0 +1,8 @@
+.footer{
+    height:10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 15px 5px 15px 10px black,5px 5px 5px 5px black;
+    border-top: 1px solid white;
+}

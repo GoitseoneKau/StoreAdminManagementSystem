@@ -1,0 +1,82 @@
+::ng-deep.mat-drawer-container {
+    color: white!important;
+}
+
+h1.title{
+    margin: 0;
+}
+
+.form-fields{
+    display: flex;
+    flex-direction: column;
+    gap:10px
+}
+
+.form-group{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap:5%;
+    width: 100%;
+}
+
+.btn-group{
+    display: flex;
+    justify-content: right;
+    gap:5%;
+}
+
+.w-100{
+    width: 100%!important;
+}
+
+.btnSave,.btnCancel{
+    border-radius: 0;
+    height: 40px!important;
+    width: 100px;
+}
+
+.btnSave:disabled{
+    background-color: #2e4a2f!important;
+    color: #a9a9a9;
+}
+
+mat-dialog-content{
+    background-color: #045ccf;
+    padding: 10px 15px !important;
+overflow-y: scroll;
+scrollbar-width: none; /* Firefox */
+-ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+::ng-deep.cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width:auto!important;
+}
+
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+    border-bottom: 1px solid #9e9e9e00;
+    height: auto;
+    width: 100%!important;
+}
+
+input:not([type]):focus, input[type=text]:not(.browser-default):focus, input[type=password]:not(.browser-default):focus, input[type=email]:not(.browser-default):focus, input[type=url]:not(.browser-default):focus, input[type=time]:not(.browser-default):focus, input[type=date]:not(.browser-default):focus, input[type=datetime]:not(.browser-default):focus, input[type=datetime-local]:not(.browser-default):focus, input[type=tel]:not(.browser-default):focus, input[type=number]:not(.browser-default):focus, input[type=search]:not(.browser-default):focus, textarea.materialize-textarea:focus {
+    border-bottom: 1px solid #4193ff!important;
+    border-bottom: 1px solid #8dbeff!important;
+    -webkit-box-shadow: 0 1px 0 0 #8dbeff!important;
+    box-shadow: 0 1px 0 0 #8dbeff!important;
+}
+
+@media screen and (max-width:650px) {
+    .form-fields{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:10px;
+    }
+
+    .form-group{
+        flex-direction: column;
+    }
+}

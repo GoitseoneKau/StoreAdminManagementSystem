@@ -1,0 +1,17 @@
+mat-toolbar{
+    position:relative;
+    z-index:4;
+}
+
+.header{
+    border-bottom: 1px solid white!important;
+}
+
+button.btn-close:focus .mat-icon,button.btn-close:active .mat-icon{
+    color: white!important;
+
+}
+
+button.btn-close:focus,button.btn-close:active {
+    background-color: #045ccf!important;
+}

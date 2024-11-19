@@ -1,0 +1,24 @@
+
+.content{
+    padding: 20px 10px;
+    /* background-color: rgb(4, 92, 207);  */
+    background-color: #045ccf; 
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.content::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+mat-sidenav-content{
+    height: calc(100vh - 64px);
+}
+
+.mat-drawer-side {
+    box-shadow: none;
+    /* border-right-color: white!important;  */
+    border-right-width: 0px!important;
+    border-right-style: solid!important;
+    border-radius: 0!important;
+}

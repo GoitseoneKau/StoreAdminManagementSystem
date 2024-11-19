@@ -1,0 +1,37 @@
+<div class="dashboard">
+    <h1 class="dashboard_header left-align">Dashboard</h1>
+
+    <div class="admin_greeting">
+        <h3 class="center-align greeting_text">Hello Name and surname</h3>
+    </div>
+  
+    <div class="score_cards">
+      
+            @for(category of categories;track category){
+                <div  class="card" [ngClass]="colors[categories.indexOf(category)]">
+                    <div class="card-content">
+                        <h2 class="card-title">{{category|capitalLetter}}</h2>
+                        <p class="total-sold-items">Total Sold:{{getTotalQuantity(carts,category)}}</p>
+                    </div>
+                </div>  
+            }  
+        
+        
+   </div>
+   <div class="dashboard_summary">
+   
+        <div class="card blue accent-3">
+            <div class="card-content">
+                <h2 class="card-title">
+                    Statistics
+                </h2>
+          
+                <h6><span class="count-text">No. of Users :</span><span class="count-text">  {{user_count}}</span></h6>
+                <h6><span class="count-text">No. of Admin(s) :</span><span class="count-text">{{admin_count}}</span></h6>
+            </div>
+        </div>
+
+   </div>
+
+
+</div>

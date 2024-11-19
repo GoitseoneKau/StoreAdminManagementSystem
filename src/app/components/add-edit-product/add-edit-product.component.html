@@ -1,0 +1,97 @@
+
+    <h1 class="title indigo darken-4" mat-dialog-title>{{title}} Product</h1>
+  
+    <mat-dialog-content>
+        <h3 *ngIf="productId()!=null">ID :{{productId()}} </h3>
+        <form [formGroup]="addEditForm">
+           
+           <div class="form-fields">
+            <div class="form-group">
+                <mat-form-field class="w-100" >
+                    <mat-label>Product Title</mat-label>
+                    <input matInput [class.ng-invalid]="addEditForm.get('title')?.touched" type="text" id="title"
+                        
+                    [errorStateMatcher]="matcher" formControlName="title" placeholder="Gucci Bag">
+           
+                    <mat-error *ngIf="addEditForm.get('title')?.errors?.['required'] ">title is required</mat-error>
+                 
+                    <mat-error *ngIf="addEditForm.get('title')?.errors?.['minlength'] ">must have min length of 10 characters</mat-error>
+
+                <mat-error *ngIf="addEditForm.get('title')?.errors?.['max'] ">must have max length of 40 characters</mat-error>
+                
+                </mat-form-field>
+    
+                <mat-form-field class="w-100">
+                    <mat-label>Price</mat-label>
+                    <input matInput [class.ng-invalid]="addEditForm.get('price')?.touched" type="number" id="price"
+                    min="0" step="00.01" value="00.00" [errorStateMatcher]="matcher"
+                        formControlName="price" placeholder="00,00">
+            
+                    <mat-error *ngIf="addEditForm.get('price')?.hasError('required') " >price is required</mat-error>
+                        
+                    <mat-error *ngIf="addEditForm.get('price')?.hasError('min') "> minimum price 0.01</mat-error>
+                
+                </mat-form-field>
+            </div>
+
+           <div class="form-group">
+            <mat-form-field class="w-100">
+                <mat-label>Description</mat-label>
+                <input matInput [class.ng-invalid]="addEditForm.get('description')?.touched" type="text" id="description"
+                [errorStateMatcher]="matcher"  formControlName="description" placeholder="Going out for drinks @ 7pm with Martin">
+             
+              
+                <mat-error *ngIf="addEditForm.get('description')?.errors?.['required'] ">description is required</mat-error>
+                   
+                <mat-error *ngIf="addEditForm.get('description')?.errors?.['minLength'] "> Description must have min length of 10 characters</mat-error>
+
+                <mat-error *ngIf="addEditForm.get('description')?.errors?.['max'] ">Description must have max length of 80 characters</mat-error>
+               
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <mat-label>Image</mat-label>
+                <input matInput [class.ng-invalid]="addEditForm.get('image')?.touched" type="url" id="image"
+                [errorStateMatcher]="matcher"
+                    formControlName="image" placeholder="Going out for drinks @ 7pm with Martin">
+             
+                     <mat-error *ngIf="addEditForm.get('image')?.errors?.['required'] ">image is required</mat-error>
+                     <mat-error *ngIf="addEditForm.get('image')?.errors?.['pattern'] ">input valid image url</mat-error>
+              
+            </mat-form-field>
+           </div>
+
+            <div class="form-group">
+                <mat-form-field class="w-100">
+                    <mat-label>Category</mat-label>
+                    <mat-select [errorStateMatcher]="matcher"  [class.ng-invalid]="addEditForm.get('category')?.touched" formControlName="category" id="category">
+                      @for (category of categories;track category) {
+                        <mat-option [value]="category">{{category|capitalLetter}}</mat-option>
+                      }
+                    </mat-select>
+                  
+                    <mat-error *ngIf="addEditForm.get('category')?.errors?.['required']">category is required</mat-error>
+                    <mat-error *ngIf="addEditForm.get('category')?.hasError('pattern')">category is required</mat-error>
+                  </mat-form-field>
+            </div>
+
+           </div>
+        
+         
+        </form>
+    </mat-dialog-content>
+
+
+   
+    <mat-dialog-actions class="btn-group indigo darken-4">
+       
+    
+            <button mat-fab class="btnSave green" [disabled]="!addEditForm.valid" (click)="onSubmitProduct()" type="submit" id="submit"  >
+                Save
+            </button>
+      
+            <button mat-fab class="btnCancel red" (click)="cancel()"  type="button" >
+                Cancel
+            </button>
+      
+    </mat-dialog-actions>
+

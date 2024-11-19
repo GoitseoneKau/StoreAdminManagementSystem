@@ -1,0 +1,100 @@
+.users{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+
+tr:hover td{
+    background-color: white!important;
+    color: #2196f3!important;
+}
+
+
+.users .user-list-heading{
+    color: white!important;
+}
+
+.users .user-list{
+    display: flex;
+    flex-direction: column;
+    gap:20px
+ }
+
+ .user-list .user-container {
+   border-radius: 5px;
+   padding: 5px;
+   background-color: #0d47a1;
+   transition: all .2s;
+   margin: 20px 0;
+   box-shadow: 5px 5px 2px 0 rgba(0, 0, 0, 0.505);
+}
+
+.user-list .user-container:hover,.user-list .user-container:focus {
+    background-color: #fffefe84;
+    color: #1a227ecc;
+ }
+
+.user-list .user-container .user-name{
+    margin-bottom: 3px;
+   font-weight: 600;
+}
+
+.user-list .user-container .user-item{
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    background-color: #fffffff0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color:#1a227e
+}
+
+.user-list .user-container .user-item .detail{
+    font-size: .85rem;
+  margin: 3px;
+
+}
+
+.user-list .user-container:hover .user-item,.user-list .user-container:focus .user-item{
+    background-color:#0d47a1!important;
+    color: #ffffff!important;
+}
+
+tr td,th{
+    border-radius: 0;
+}
+
+
+
+/* mat css for text field-style override */
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #086bec!important; 
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+    color:  #6babff!important;
+}
+
+::ng-deep input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #8dbeff;
+    -webkit-box-shadow: 0 1px 0 0 #4193ff;
+    box-shadow: 0 1px 0 0 #4193ff;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: #ffffff !important;;
+    caret-color: #b9d6fd !important;;
+}
+
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color:#4193ff!important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    border-bottom-color:#ffffff!important;
+}
+
+
