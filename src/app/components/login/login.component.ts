@@ -34,34 +34,36 @@ export class LoginComponent {
   constructor(private formBuilder:FormBuilder,private loginService:LoginService,private router:Router){
     //form group
     this.loginForm = this.formBuilder.group({
-      username:new FormControl("",[Validators.required]),
-      password:new FormControl("",[Validators.required])
+      username:new FormControl("",[Validators.required])!,
+      password:new FormControl("",[Validators.required])!
     })
     
   }
 
 
   onSubmit(){
-    //get values from login form
+    // get values from login form
     let username=this.loginForm.get('username')?.value
     let password=this.loginForm.get('password')?.value
   
-   this.loginService.login(username,password).subscribe({
-    next:(token)=>{
-      //if succesfull redirect to dashboard
-      this.router.navigate(["/admin/dashboard"],{replaceUrl:true})
-    },
-    error:(error)=>{
-      //if unsuccessfuul return error
-      if(error.status==401){
-        //if unknown error
-        this.error = "failed to login,check your password and username"
-      }if(error.status==0){
-        //if unstable/no interne connection
-        this.error = "No connection. Check Your internet"
-      }
+    if(username && password){
+      this.loginService.login(username,password).subscribe({
+        next:(token)=>{
+          //if succesfull redirect to dashboard
+          this.router.navigate(["/admin/dashboard"],{replaceUrl:true})
+        },
+        error:(error)=>{
+          //if unsuccessfuul return error
+          if(error.status==401){
+            //if unknown error
+            this.error = "failed to login,check your password and username"
+          }if(error.status==0){
+            //if unstable/no interne connection
+            this.error = "No connection. Check Your internet"
+          }
+        }
+       })
     }
-   })
   }
 
 

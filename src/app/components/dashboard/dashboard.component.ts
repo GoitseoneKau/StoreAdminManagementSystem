@@ -13,7 +13,7 @@ import { LoginService } from '../../services/login.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NgFor, CapitalLetterPipe,CommonModule],
+  imports: [CapitalLetterPipe,CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   changeDetection:ChangeDetectionStrategy.Default
@@ -26,11 +26,7 @@ export class DashboardComponent {
 
   user_name = ""
   user_surname=""
-  user!: {
-    username: string;
-    password: string;
-    token: string;
-  };
+  user: { username: string }={username:""};
 
   carts:cart[] = []
   categories:string[]=[]
@@ -82,11 +78,14 @@ constructor(){
         this.user_count = users.filter(user=>!user.admin).length
         this.admin_count = users.filter(user=>user.admin).length
 
-        let user = users.filter((user)=>user.username==this.user.username)[0]
-        if(user){
+        let user = users.filter((user)=>{
+          if(user){ return user.username==this.user.username}
+         return
+        })[0]
+       
           this.user_name = user.name.firstname
           this.user_surname = user.name.lastname
-        }
+        
       })
 
     })

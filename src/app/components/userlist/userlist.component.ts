@@ -14,7 +14,7 @@ import { LoginService } from '../../services/login.service';
 @Component({
   selector: 'app-userlist',
   standalone: true,
-  imports: [NgFor,NgIf,MatSortModule,MatInputModule,MatFormFieldModule,FormsModule, AsyncPipe,CapitalLetterPipe],
+  imports: [NgIf,MatSortModule,MatInputModule,MatFormFieldModule,FormsModule,CapitalLetterPipe],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.css'
 })
@@ -41,7 +41,7 @@ admin!:User
       this.filteredUsers = users
 
       //temporary holder variable
-      let tempuser: { username: string; }
+      let tempuser: { username: string; }={username:""}
       this.loginService.currentUser.subscribe((current_user)=>{//login subscription
         //get current user
         tempuser = current_user

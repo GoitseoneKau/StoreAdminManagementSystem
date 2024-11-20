@@ -18,7 +18,7 @@ export interface MenuItem{
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NgClass, MatSidenavModule, MatListModule, MatIconModule, NgFor, NgIf, RouterLink, RouterLinkActive, CapitalLetterPipe],
+  imports: [ MatSidenavModule, MatListModule, MatIconModule, NgFor, NgIf, RouterLink, RouterLinkActive, CapitalLetterPipe],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -27,11 +27,7 @@ LoginService = inject(LoginService)
 userService = inject(UsersService)
 user_name = ""
 user_surname=""
-  user!: {
-    username: string;
-    password: string;
-    token: string;
-  };
+  user:any;
   collapsed = input(false)
 
   menuItems = signal<MenuItem[]>([
@@ -64,12 +60,11 @@ user_surname=""
     // users service subscription
     this.userService.users$.subscribe((users)=>{
 
-      let user = users.filter((user)=>user.username==this.user.username)[0]//join current user with user from list;filter
+      let user = users.filter((user)=>{user.username==this.user.username})[0]//join current user with user from list;filter
 
-      if(user){//check if not null
-        this.user_name = user.name.firstname
-        this.user_surname = user.name.lastname
-      }
+      this.user_name = user.name.firstname
+      this.user_surname = user.name.lastname
+      
     
     })
   }

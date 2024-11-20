@@ -63,7 +63,6 @@ export interface DialogData {
     MatButtonModule,
     MatSelectModule,
     MatDialogModule,
-    JsonPipe,
     CapitalLetterPipe
 ],
 providers:[ CurrencyPipe]
