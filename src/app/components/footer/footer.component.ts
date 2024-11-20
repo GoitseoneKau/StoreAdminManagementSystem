@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 
 
@@ -11,9 +11,15 @@ import { LoginService } from '../../services/login.service';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  //inject service
-  loginService = inject(LoginService)
+ 
   
   //get is loggedin variable from service
-  isLoggedIn = this.loginService.isLoggedIn()
+  isLoggedIn:boolean=false
+
+  constructor( private loginService:LoginService){
+      //get is loggedin variable from service
+      this.loginService.isLoggedIn().subscribe(value=>this.isLoggedIn =value)
+  }
+
+ 
 }

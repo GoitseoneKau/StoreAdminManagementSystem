@@ -13,6 +13,7 @@ export class LoginService {
   private url = "https://fakestoreapi.com/auth/login"
   private readonly platformId = inject(PLATFORM_ID);
   private currentUserSubject = new BehaviorSubject<any>(this.getUser())
+  private isLoggedinSubject = new BehaviorSubject<boolean>(false)
 
   constructor(private httpClient:HttpClient) { }  
 
@@ -48,15 +49,20 @@ export class LoginService {
     return this.currentUserSubject.asObservable()
   }
 
-  isLoggedIn():boolean{
-    return this.getUser()!=null
+  isLoggedIn(){
+    this.isLoggedinSubject.next(this.getUser()!==null)
+    return  this.isLoggedinSubject.asObservable()
   }
+
+  
 
   logout(){
     if(isPlatformBrowser(this.platformId)){ 
       localStorage.removeItem("user")
+      this.isLoggedinSubject.next(false)
+      this.currentUserSubject.next(null)
     }
 
-    this.currentUserSubject.next(null)
+   
   }
 }

@@ -5,7 +5,6 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ProductdetailsComponent } from './components/productdetails/productdetails.component';
 import { ProductlistComponent } from './components/productlist/productlist.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
-import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AddEditProductComponent } from './components/add-edit-product/add-edit-product.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 

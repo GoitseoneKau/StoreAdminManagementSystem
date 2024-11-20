@@ -63,11 +63,13 @@
 
 
     .dashboard_header{
-        font-size: 2.5rem;
+        font-size: 3rem;
+        font-weight:500;
     }
     
     .admin_greeting .greeting_text{
-        font-size: 1.5rem;
+        font-size: 2rem;
+        font-weight:500;
     }
 
     .count-text{
@@ -83,8 +85,7 @@
     }
 
     .admin_greeting .greeting_text{
-        font-size: 1.2rem;
-        text-align: left;
+        font-size: 1.6rem;
     }
 
     .card .card-title{

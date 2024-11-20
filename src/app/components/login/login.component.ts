@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -37,6 +37,7 @@ export class LoginComponent {
       username:new FormControl("",[Validators.required]),
       password:new FormControl("",[Validators.required])
     })
+    
   }
 
 
