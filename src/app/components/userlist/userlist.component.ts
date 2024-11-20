@@ -8,6 +8,7 @@ import {Sort, MatSortModule} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '../../services/login.service';
 
 
 @Component({
@@ -19,28 +20,45 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserlistComponent {
 
-
+  //services
+loginService=inject(LoginService)
 userService=inject(UsersService)
+
+//variables
 user$!:Subscription
 users: User[]=[];
 filteredUsers:User[]=[]
 search: any;
+admin!:User
 
   ngOnInit(){
-    this.userService.getUsers()
-    this.user$ = this.userService.users$.subscribe((users)=> {
+    this.userService.getUsers()//fetch users
+
+    this.user$ = this.userService.users$.subscribe((users)=> {//user subscription to subjectBehaviour
+      //main users array
       this.users=users
+      //holder array variable for filter
       this.filteredUsers = users
+
+      //temporary holder variable
+      let tempuser: { username: string; }
+      this.loginService.currentUser.subscribe((current_user)=>{//login subscription
+        //get current user
+        tempuser = current_user
+      })
+
+      this.admin = users.filter((user)=>user.username==tempuser.username)[0]//join current user with user from list;filter
+      
     });
   }
 
   ngOnDestroy(){
-    this.user$.unsubscribe()
+    this.user$.unsubscribe()//unsusbscribe to user subscription
   }
 
 
 
-  sortData(sort: Sort) {
+  sortUsers(sort: Sort) {
     let data: User[] = this.filteredUsers
 
     if (!sort.active || sort.direction === '') {
@@ -65,8 +83,9 @@ search: any;
           return compare(a.phone, b.phone, isAsc);
         default:
           return 0;
-      }
-    });
+      }//end of switch
+
+    });//end of sort function
 
 
   }//end of function
@@ -83,5 +102,6 @@ search: any;
 }//end of class
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
+  //sort logic
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
+}//end of function

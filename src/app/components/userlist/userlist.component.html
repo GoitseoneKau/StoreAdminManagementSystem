@@ -1,14 +1,17 @@
 <div class="users">
     <h2 class="user-list-heading">Store Users</h2>
     <div>
-        <mat-form-field class="">
+      <!-- material design input text field -->
+      <mat-form-field class="">
         <mat-label>Search User(s)</mat-label>
         <input matInput placeholder="e.g. David" [(ngModel)]="search" (ngModelChange)="searchUsers($event)"  >
       </mat-form-field>
     </div>
+    <!-- show on large tablets and laptops or computers -->
     <div class="hide-on-med-and-down" >
-      <table  mat-elevation-z4  matSort  (matSortChange)="sortData($event)">
+      <table  mat-elevation-z4  matSort  (matSortChange)="sortUsers($event)">
         <tbody>
+          <!-- table headers -->
             <tr  class="blue darken-3">
                 <th mat-sort-header="id">Id</th>
                 <th mat-sort-header="firstname">First Name</th>
@@ -19,8 +22,9 @@
               </tr>
             
               @for(user of users;track user.id){
+         <!-- table data -->
                 <tr  class="blue user-item"  *ngIf="!user.admin">
-                  <td class="center-align">{{user.id-1}}.</td>
+                  <td class="center-align">{{ user.id }}.</td>
                   <td>{{user.name.firstname|capitalLetter}}</td>
                   <td>{{user.name.lastname|capitalLetter}}</td>
                   <td>{{user.email}}</td>
@@ -32,9 +36,10 @@
       </table>
     </div>
 
-    
+    <!-- show on small tablets and mobile phones -->
     <div class="user-list show-on-medium-and-down hide-on-med-and-up">
     @for(user of users;track user.id){
+      <!-- list of users -->
       <div *ngIf="!user.admin" class="user-container">
         <p class="user-name">  {{user.id-1}}. {{user.name.firstname|capitalLetter}}  {{user.name.lastname|capitalLetter}}</p>
         <div  class="user-item">

@@ -15,7 +15,6 @@ export class CartService {
   getCartProducts():Observable<cart[]>{
     return this.httpClient.get<cart[]>(this.cart_url).pipe(
       catchError((error:HttpErrorResponse)=>{
-        console.log(error,"failed con")
         return throwError(()=>error)
       })
     )

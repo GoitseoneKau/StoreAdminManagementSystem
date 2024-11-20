@@ -1,10 +1,15 @@
+<!-- admi user header -->
 <div class="nav-header">
     <mat-icon [class.sizeup]="collapsed()" matListItemIcon> account_circle</mat-icon>
-    <h3 *ngIf="collapsed()">Name : John Doe</h3>
+    <h3 *ngIf="collapsed()">Name : {{user_name|capitalLetter}} {{user_surname|capitalLetter}}</h3>
     <p *ngIf="collapsed()">Position: Admin</p>
 </div>
+<!-- material design list -->
 <mat-nav-list>
-    <a class="item-link" mat-list-item *ngFor="let item of menuItems()" routerLinkActive="active" #rla="routerLinkActive" [routerLink]="item.route">
+    <!-- for loop anchor links/material list items -->
+    <a *ngFor="let item of menuItems()" class="item-link" 
+        mat-list-item  routerLinkActive="active" 
+        #rla="routerLinkActive" [routerLink]="item.route">
         <mat-icon [class.white-text]="rla.isActive"  matListItemIcon>{{item.icon}}</mat-icon>
         <span *ngIf="collapsed()">{{item.label}}</span>
     </a>

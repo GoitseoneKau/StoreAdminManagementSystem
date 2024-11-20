@@ -14,7 +14,6 @@ export class ProductsService {
   private url = "https://fakestoreapi.com/products"
   private oneProductSubject = new BehaviorSubject<any>(null)
   private productsBehaviorSubject =  new BehaviorSubject<Product[]>([])
-  private products$ = this.productsBehaviorSubject.asObservable()
   private length=0
 
   
@@ -43,7 +42,7 @@ export class ProductsService {
   }
 
   getProduct$(){
-    return this.products$
+    return this.productsBehaviorSubject.asObservable()
   }
  
   getProductLength(){
@@ -71,18 +70,19 @@ export class ProductsService {
     return this.httpClient.put<Product>(`${this.url}/${product.id}`,product)
   }
 
+  deleteProduct(product:Product):Observable<Product>{
+    return this.httpClient.delete<Product>(`${this.url}/${product.id}`)
+  }
+
   setUpdateBehavior(input:Product){
     this.oneProductSubject.next(input)
   }
 
   getUpdateProduct(){
-    console.log(this.oneProductSubject.getValue())
     return this.oneProductSubject.asObservable()
   }
 
-  deleteProduct(product:Product):Observable<Product>{
-    return this.httpClient.delete<Product>(`${this.url}/${product.id}`)
-  }
+ 
 
 
 }

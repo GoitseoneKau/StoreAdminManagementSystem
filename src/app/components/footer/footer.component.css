@@ -1,8 +1,16 @@
-.footer{
+.footer-style{
     height:10vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 15px 5px 15px 10px black,5px 5px 5px 5px black;
     border-top: 1px solid white;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    font-weight: 500;
+}
+
+
+.shadow-top{
+    box-shadow: 15px 5px 15px 10px black,5px 5px 5px 5px black;
 }

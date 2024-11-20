@@ -1,93 +1,86 @@
 <div class="products">
-    <h2 class="product-list-heading">Store products</h2>
-    <div class="form-group">
-        <mat-form-field class="">
-            <mat-label>Search Product(s)</mat-label>
-            <input matInput placeholder="e.g. men's clothing" [(ngModel)]="search" (ngModelChange)="searchProducts($event)"  >
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Categories</mat-label>
-            <mat-select [(ngModel)]="category" (ngModelChange)="categoryChange($event)">
-                <mat-option aria-selected="true" value="">All</mat-option>
-              @for (category of categories;track category) {
-                <mat-option [value]="category">{{category|capitalLetter}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <button mat-fab extended class="blue btnAdd" (click)="addProduct()" >
-            <mat-icon>add</mat-icon>
-            New Product
+  <h2 class="product-list-heading">Store products</h2>
+  <div class="form-group">
+    <mat-form-field class="">
+      <mat-label>Search Product(s)</mat-label>
+      <input matInput placeholder="e.g. men's clothing" [(ngModel)]="search" (ngModelChange)="searchProducts($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Categories</mat-label>
+      <mat-select [(ngModel)]="category" (ngModelChange)="categoryChange($event)">
+        <mat-option aria-selected="true" value="">All</mat-option>
+        @for (category of categories;track category) {
+        <mat-option [value]="category">{{category|capitalLetter}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button mat-fab extended class="blue btnAdd" (click)="addProduct()">
+      <mat-icon>add</mat-icon>
+      New Product
+    </button>
+  </div>
+
+
+
+  <mat-paginator class="blue darken-4 poppins-medium" [length]="productsLength" [pageSize]="4"
+    [pageSizeOptions]="[4,8,12,20]" aria-label="Select page" (page)="onPageChange($event)">
+  </mat-paginator>
+
+  <ngx-spinner *ngIf="spinner;else productList" class="spinner" type="ball-clip-rotate" size="default"
+    [bdColor]="bdcolor" [color]="animation_color" [fullScreen]="false">
+    <p class="poppins-medium loading-text"> {{loadingMessage}} </p>
+  </ngx-spinner>
+
+  <ng-template #productList>
+    <div class="product-list" [ngClass]="{ 'no-product-list':products.length==0}">
+
+
+      @for(product of products;track product.id){
+      <!-- product item card -->
+      <div class="product-item">
+        <!-- card content -->
+        <div class="product-details" (click)="productDetails(product.id!)">
+          <div class="product-header">
+            <!-- card image -->
+            <h3 class="light-blue-text text-darken-1">{{product.title.substring(0,30)|uppercase}}...</h3>
+            <img width="150em" height="160em" alt="{{product.title}}" src="{{product.image}}" />
+          </div>
+          <div class="product-content">
+            <!-- card info -->
+            <p class="black-text "><b>Product Id</b>: {{product.id}}</p>
+            <p class="black-text "><b>Category</b>: {{product.category|capitalLetter}}</p>
+
+            <p class="black-text left-align"><b>Rating</b>: {{product.rating?.rate? product.rating?.rate : 0}}</p>
+            <p class="black-text right"><b>Price</b>: {{product.price|currency}}</p>
+
+          </div>
+        </div>
+        <!-- card buttons -->
+        <div class="product-actions">
+          <button class="btnItem blue " (click)="editProduct(product)" matRipple mat-fab extended>
+            <mat-icon>edit</mat-icon>
+            Edit
           </button>
+          <button class="btnItem red darken-1" (click)="deleteProduct(product)" mat-fab extended>
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </div>
+      </div>
+      }
+
+
+
+    </div>
+    <!-- show if no products -->
+    <div *ngIf="products.length===0" class="product-item">
+      <h2>No Products</h2>
     </div>
 
- 
+  </ng-template>
 
-    <mat-paginator class="blue darken-4 poppins-medium" [length]="productsLength"
-        [pageSize]="4"
-        [pageSizeOptions]="[4,8,12,20]"
-        
-        aria-label="Select page"
-        (page)="onPageChange($event)">
-    </mat-paginator>
-
-    <ngx-spinner 
-    *ngIf="spinner;else productList"
-    class="spinner"
-    type="ball-clip-rotate" 
-    size="default"
-    [bdColor]="bdcolor"
-    [color]="animation_color" 
-    [fullScreen]="false"
-        >
-        <p class="poppins-medium loading-text" > {{loadingMessage}} </p>
-    </ngx-spinner>
-   
-   <ng-template #productList>
-    <div class="product-list"  [ngClass]="{ 'no-product-list':products.length==0}"  >
-
-
-        @for(product of products;track product.id){
-            <div  class="product-item" >
-                <div class="product-details"  (click)="productDetails(product.id!)">
-                    <div class="product-header" >
-                        <h3 class="light-blue-text text-darken-1">{{product.title.substring(0,30)|uppercase}}...</h3>
-                        <img width="150em" height="160em" alt="{{product.title}}" src="{{product.image}}"/>
-                    </div>
-                   <div class="product-content">
-                    <p class="black-text "><b>Product Id</b>: {{product.id}}</p>
-                    <p class="black-text "><b>Category</b>: {{product.category|capitalLetter}}</p>
-          
-                      <p class="black-text left-align"><b>Rating</b>: {{product.rating?.rate? product.rating?.rate : 0}}</p>
-                      <p class="black-text right"><b>Price</b>: {{product.price|currency}}</p>
-          
-                   
-                   </div>
-                </div>
-              <div class="product-actions">
-                <button class="btnItem blue " (click)="editProduct(product)" matRipple  mat-fab extended>
-                    <mat-icon>edit</mat-icon>
-                    Edit
-                  </button>
-                  <button class="btnItem red darken-1" (click)="deleteProduct(product)" mat-fab extended>
-                    <mat-icon>delete</mat-icon>
-                    Delete
-                  </button>
-              </div>
-            </div>
-          }
-    
-         
-            
-       </div>
-       <div *ngIf="products.length===0" class="product-item">
-        <h2>No Products</h2>
-    </div>
-   </ng-template>
-   
 
 </div>
 
 
-
-    
-<router-outlet  />
+<router-outlet />

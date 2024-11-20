@@ -37,7 +37,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 
 
-class MyErrorStateMatcher implements ErrorStateMatcher {
+export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
@@ -83,7 +83,7 @@ export class AddEditProductComponent {
 
   categories: string[]=[];
   matcher = new MyErrorStateMatcher()
-  
+
   productId=model();
   product=signal<Product>({
     title: '',
@@ -130,7 +130,7 @@ export class AddEditProductComponent {
       this.addEditForm.setValue({
         title:product.title,
         description:product.description,
-        price:this.currencyPipe.transform(product.price,"0.0-2")!,
+        price:this.currencyPipe.transform(product.price,"","")!,
         category:product.category,
         image:product.image
       

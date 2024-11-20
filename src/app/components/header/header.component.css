@@ -5,6 +5,9 @@ mat-toolbar{
 
 .header{
     border-bottom: 1px solid white!important;
+    display: flex;
+    justify-content: space-between;
+    
 }
 
 button.btn-close:focus .mat-icon,button.btn-close:active .mat-icon{
@@ -14,4 +17,10 @@ button.btn-close:focus .mat-icon,button.btn-close:active .mat-icon{
 
 button.btn-close:focus,button.btn-close:active {
     background-color: #045ccf!important;
+}
+button.btnLogout{
+   float: right;
+   border-radius: 0!important;
+   width: 80px;
+   font-size: 1em;
 }

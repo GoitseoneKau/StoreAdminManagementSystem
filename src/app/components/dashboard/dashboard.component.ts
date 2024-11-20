@@ -8,6 +8,7 @@ import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,10 +19,18 @@ import { Product } from '../../models/product';
   changeDetection:ChangeDetectionStrategy.Default
 })
 export class DashboardComponent {
-
+  LoginService = inject(LoginService)
   cartService$ = inject(CartService)
   productService$ = inject(ProductsService)
   userService$ = inject(UsersService)
+
+  user_name = ""
+  user_surname=""
+  user!: {
+    username: string;
+    password: string;
+    token: string;
+  };
 
   carts:cart[] = []
   categories:string[]=[]
@@ -31,6 +40,7 @@ export class DashboardComponent {
   cart_subscription$!:Subscription 
   category_subscription$!:Subscription 
   users_subscription$!: Subscription;
+  login_subscription$!: Subscription;
 
   user_count:number=0;
   admin_count: number=0;
@@ -40,35 +50,55 @@ constructor(){
 
   ngOnInit(){
 
+    //product subscription
     this.productService$.getProducts().subscribe(((products)=>{
       this.products = products
     }))
 
+    //cart subscription
     this.cart_subscription$ = this.cartService$.getCartProducts().subscribe((carts)=>{
          
-        this.carts= carts
-      
-        this.displayCart()
-      
+      this.carts= carts
+    
+      this.displayCart()
+    
     })
-        
 
+    //category subscription
     this.category_subscription$ = this.productService$.getProductCategories()
     .subscribe((categories)=> this.categories = categories as string[])
-      
+    
+    //get Users
     this.userService$.getUsers()
 
-    this.users_subscription$ = this.userService$.users$.subscribe((users)=>{
-      this.user_count = users.filter(user=>!user.admin).length
-      this.admin_count = users.filter(user=>user.admin).length
+    //login subscription
+    this.login_subscription$ = this.LoginService.currentUser
+    .subscribe((data)=>{
+      this.user =data
+      //users subscription
+      this.users_subscription$ = this.userService$.users$
+      .subscribe((users)=>{
+
+        this.user_count = users.filter(user=>!user.admin).length
+        this.admin_count = users.filter(user=>user.admin).length
+
+        let user = users.filter((user)=>user.username==this.user.username)[0]
+        if(user){
+          this.user_name = user.name.firstname
+          this.user_surname = user.name.lastname
+        }
+      })
+
     })
- 
+
+   
   }
 
   ngOnDestroy(){
     //this.cart_subscription$.unsubscribe()
     this.category_subscription$.unsubscribe()
     this.users_subscription$.unsubscribe()
+    this.login_subscription$.unsubscribe()
   }
 
 
