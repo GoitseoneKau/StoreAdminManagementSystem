@@ -1,8 +1,4 @@
-<div *ngIf="!isLoggedIn()" class="footer-style  mat-elevation-z14 white" >
-    <div class="copyright black-text" >&copy; copyright 2024 Goitseone Kau </div>
+<div  class="footer-style  mat-elevation-z14 " [ngClass]="{'white':!isLoggedIn(),'indigo darken-4 shadow-top':isLoggedIn()}" >
+    <div class="copyright" [ngClass]="{' black-text':!isLoggedIn(),'white-text':isLoggedIn()}" >&copy; copyright 2024 Goitseone Kau </div>
 </div>
 
-
-<div *ngIf="isLoggedIn()" class="footer-style  mat-elevation-z14 indigo darken-4 shadow-top" >
-    <div class="copyright white-text"  >&copy; copyright 2024 Goitseone Kau </div>
-</div>

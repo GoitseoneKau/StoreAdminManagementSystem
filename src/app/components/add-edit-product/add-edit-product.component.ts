@@ -36,7 +36,7 @@ import { map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
-
+//export Material fieldfrom error handler
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -44,7 +44,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-
+//export Dialog interface
 export interface DialogData {
   product: Product;
   productId: string;
@@ -75,7 +75,6 @@ export class AddEditProductComponent {
   readonly dialogRef = inject(MatDialogRef<AddEditProductComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
-  dataOutput=output<any>() 
   addEditForm!:FormGroup;
   editForm:boolean =false;
   title:string=""
@@ -91,18 +90,15 @@ export class AddEditProductComponent {
     description: '',
     image: ''
   })
-  productCom = computed(()=>this.product())
 
-  constructor(
-    private formBuilder:FormBuilder,
-    private productService:ProductsService,
-    private currencyPipe:CurrencyPipe
-  ){
+
+  constructor(private formBuilder:FormBuilder,private productService:ProductsService,private currencyPipe:CurrencyPipe){
+    //build formgroup
     this.addEditForm = this.formBuilder.group({
       title: new FormControl("",[Validators.required,Validators.minLength(5),Validators.max(40)]),
       price:new FormControl("",[Validators.required,Validators.min(0.01)]),
       category:new FormControl("",[Validators.required]),
-      description:new FormControl("",[Validators.required,Validators.minLength(10),Validators.max(80)]),
+      description:new FormControl("",[Validators.required,Validators.minLength(10)]),
       image:new FormControl("",[Validators.required,Validators.pattern("(http(s?)\\:\\/\\/)(([\\w]+\\.)?)([\\w]+)(\\.+)([\\w]+)(\\/)([\\w\\W]+)")])
     })
 
@@ -110,13 +106,18 @@ export class AddEditProductComponent {
 
   ngOnInit(){
 
+    
     if(this.product().title.length>0){
+      //set title to edit
       this.title ="Edit"
+      //if product set,fill in form
       this.populateFields(this.product())
     }else{
+      //set title to add
       this.title = "Add"
-    }
+    }//end if
 
+    //categories subscription
    this.productService
       .getProductCategories()
       .subscribe((categories) => (this.categories = categories))
@@ -124,55 +125,69 @@ export class AddEditProductComponent {
 
   }
 
+  //fill in form function
   populateFields(product:Product){
     
+    //set form values from host component
       this.addEditForm.setValue({
         title:product.title,
         description:product.description,
         price:this.currencyPipe.transform(product.price,"","")!,
         category:product.category,
         image:product.image
-      
     })
     
   }
 
-   getData(e:Event){
-    return this.dataOutput.emit(e)
-   }
+  
 
   onSubmitProduct() {
 
     if(this.title=="Add"){
 
+      //declare holder  variable
       let addProductData = this.addEditForm.value as Product
-      
+
+      //edit property in holder variable
       addProductData.rating! ={
         rate:0,
         count:0
       }
-      console.log(addProductData.rating)
-      let prod:Product
+      
+      let new_product:Product
       this.productService.postProduct(addProductData).subscribe({
         next:(product)=>{
-          prod=product
+          //assign loaded product result
+          new_product=product
         },
         error:(error)=>{ this.dialogRef.close(error.error)},
         complete:()=>{
-          this.product.set(prod)
+          //set product signal with assigned result
+          this.product.set(new_product)
+          //emit product signal to host closing event subscriptions
           this.dialogRef.close(this.product())
         }
       })
 
     }
     else{
+       //declare holder  variable
       let updateProductData = this.addEditForm.value as Product
-      updateProductData.id = this.product().id!
+
+      //set id property in holder variable with host sent product id property
+      updateProductData.id = this.product().id
+
+      //temporary holder of result
       let updatedProd:Product
+
       this.productService.updateProduct(updateProductData).subscribe({
-        next:(product)=>{updatedProd = product},
+        next:(product)=>{
+           //assign result to temporary holder
+          updatedProd = product
+        },
         error:(error)=>{ this.dialogRef.close(error.error)},
         complete:()=>{ 
+          //emit assigned temporay holder to host closing event subscriptions
           this.dialogRef.close(updatedProd)
         }
       })
@@ -185,6 +200,7 @@ export class AddEditProductComponent {
 
 
   cancel() {
+    //close the dialog with no/null emitted value
     this.dialogRef.close(null)
   }    
 }

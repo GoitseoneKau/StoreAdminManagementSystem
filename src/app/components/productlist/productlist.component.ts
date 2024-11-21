@@ -378,6 +378,7 @@ export class ProductlistComponent {
 
   //edit button event function
   editProduct(prod: Product) {
+    
     //open a dialog box
     let editDialog = this.dialog.open(AddEditProductComponent); 
 
@@ -398,36 +399,47 @@ export class ProductlistComponent {
       } else if (result != null) {
 
          //temporary holder array
-        let changedProducts: Product[] = [];
+        let changedProducts: Product[] = this.filterProducts;
 
-         //map product array
-        this.products.map((product) => {
-         
-          //product result from edit dialog
-          let new_prod = result; 
+         //map product array and store  them to global product variables
+         this.products = this.filterProducts =  changedProducts
+         .map((product) => {
+            
+              //product result from edit dialog
+              let new_prod = result; 
 
-           //if product result matches current product
-          if (product.id === prod.id) {
-           
-            //push changed/edited product item to temporary holder array
-            changedProducts.push({
-              ...product,
-              price: new_prod.price,
-              description: new_prod.description,
-              category: new_prod.category,
-              title: new_prod.title,
-              image: new_prod.image,
-            });
-          } else {
-            // else push unmatched product item
-            changedProducts.push(product);
-          }
+              //if product result matches current product
+              if (product.id === new_prod.id) {
+              
+                //return changed/edited product item to temporary holder array
+                return ({
+                  ...product,
+                  price: new_prod.price,
+                  description: new_prod.description,
+                  category: new_prod.category,
+                  title: new_prod.title,
+                  image: new_prod.image,
+                });
+              } else {
+                // else return unmatched product item
+                return product;
+              }
         }); //end of map function
 
-        //store changed array
-        this.products = this.filterProducts = changedProducts; 
+
+        //update curent array length
+        this.productsLength = this.products.length;
+
+        // update paginator,with current paginator values;current arrray length
+        this.onPageChange({
+          pageSize: this.paginator.pageSize,
+          pageIndex: this.paginator.pageIndex,
+          length: this.productsLength,
+        });
       }
+
     }); //end of subscription
+
   } //end of function
 
 
@@ -440,7 +452,7 @@ export class ProductlistComponent {
     this.products = this.filterProducts = deleteProd.filter(
       (p) => product.id != p.id
     ); //filter out the deleted item
-
+    console.log("after delete",this.products)
     //update curent array length
     this.productsLength = this.products.length;
 
