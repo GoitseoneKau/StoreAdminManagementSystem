@@ -49,8 +49,10 @@ export class LoginComponent {
     if(username && password){
       this.loginService.login(username,password).subscribe({
         next:(token)=>{
-          //if succesfull redirect to dashboard
-          this.router.navigate(["/admin/dashboard"],{replaceUrl:true})
+          if(token){
+            //if succesfull redirect to dashboard
+            this.router.navigate(["/admin/dashboard"],{replaceUrl:true})
+          }
         },
         error:(error)=>{
           //if unsuccessfuul return error

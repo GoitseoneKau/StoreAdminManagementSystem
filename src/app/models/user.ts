@@ -1,5 +1,5 @@
 export interface User {
-    admin: boolean
+    admin: boolean,
     id:number,
     email:string,
     username:string,

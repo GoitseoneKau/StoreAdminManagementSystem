@@ -72,23 +72,51 @@ ng serve
 ![Login Input Screen](/src/assets/images/login-input.PNG)
 
 ## Admin Dashboard
+
 ### Mobile and Tablet
+##### Mobile
 ![Mobile Dashboard](/src/assets/mobile-admin.png)
 
+##### Tablet
 ![Tablet Dashboard](/src/assets/tablet-dashboard.png)
 
 ### Window
 ![Dashboard](/src/assets/dashboard.PNG)
 
 ## Product List
+
 ### Mobile and Tablet
-![Dashboard](/src/assets/tablet-products.png)
+##### Tablet
+![Tablet Product List](/src/assets/tablet-products.png)
+##### Mobile
+![Mobile Product List](/src/assets/mobile-productlist.gif)
 
 #### Add
-![Dashboard](/src/assets/dashboard.PNG)
+##### Tablet
+![tablet Add Dialog](/src/assets/tablet-add.png)
+##### Mobile
+![mobile Add Dialog](/src/assets/mobile-add.png)
 
 #### Edit
-![Dashboard](/src/assets/dashboard.PNG)
+##### Tablet
+![tablet Edit Dialog](/src/assets/tablet-edit.png)
+
+##### Mobile
+![mobile Edit Dialog](/src/assets/mobile-edit.png)
+
+
+#### Category Filter
+
+![Category Filter](/src/assets/category-filter.PNG)
+
+#### Collapsible Sidebar
+
+##### Tablet
+![Tablet Collapsible Sidebar](/src/assets/tablet-collapsiblebar.png)
+
+##### Mobile
+![Mobile Collapsible Sidebar](/src/assets/mobile-collapsiblebar.png)
+
 
 ### Window
 ![Product Page](/src/assets/products-page.PNG)
@@ -109,7 +137,12 @@ ng serve
 ## User List
 ### Mobile and Tablet
 
+##### Tablet
+![Tablet Userlist](/src/assets/tablet-userlist.png)
+
+##### Mobile
 ![Mobile Userlist](/src/assets/mobile-userlist.png)
+
 ### Window
 
 ![Laptop Userlist](/src/assets/laptop-userlist.png)

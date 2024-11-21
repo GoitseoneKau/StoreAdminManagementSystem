@@ -12,18 +12,19 @@ export class LoginService {
 
   private url = "https://fakestoreapi.com/auth/login"
   private readonly platformId = inject(PLATFORM_ID);
-  private currentUserSubject = new BehaviorSubject<any>(this.getUser())
-  private isLoggedinSubject = new BehaviorSubject<boolean>(false)
 
-  constructor(private httpClient:HttpClient) { }  
+  private isLoggedinSubject = new BehaviorSubject<boolean>(false)//subject to store boolean
+
+  constructor(private httpClient:HttpClient) { }  //inject httpclient in constructor
+
+
 
   login(username:string,password:string){
     
-    return this.httpClient.post(this.url,{username,password}).pipe(
+    return this.httpClient.post<string>(this.url,{username,password}).pipe(
       map(token=>{
         this.setUser({username,password,token})
-        this.currentUserSubject.next({username,password,token})
-        return {username,password,token}
+        return this.getUser()
       }),
       catchError((error:HttpErrorResponse)=>{
         return throwError(()=>error)
@@ -32,13 +33,15 @@ export class LoginService {
    
   }
 
+
   getUser(){
     if(isPlatformBrowser(this.platformId)){ 
-      const user = localStorage.getItem("user")
+      let user = localStorage.getItem("user")
       return user?JSON.parse(user):null
     }
     return null
   }
+
 
   setUser(user:any){
     if(isPlatformBrowser(this.platformId)){ 
@@ -46,24 +49,26 @@ export class LoginService {
     }
   }
 
-  get currentUser():Observable<any>{
-    return this.currentUserSubject.asObservable()
+
+  get currentUser():{username:string,password:string,token:string}{
+    return this.getUser()
   }
 
+
   isLoggedIn(){
-    this.isLoggedinSubject.next(this.getUser()!==null)
+    if(isPlatformBrowser(this.platformId)){ 
+      this.isLoggedinSubject.next(this.getUser() !== null)
+    }
     return  this.isLoggedinSubject.asObservable()
   }
 
-  
 
   logout(){
-    if(isPlatformBrowser(this.platformId)){ 
+    if(isPlatformBrowser(this.platformId)){
+      if(!this.isLoggedIn()){return} 
       localStorage.removeItem("user")
       this.isLoggedinSubject.next(false)
-      this.currentUserSubject.next(null)
     }
-
-   
   }
+
 }

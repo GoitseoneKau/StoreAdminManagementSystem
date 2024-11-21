@@ -97,7 +97,11 @@ export class ProductlistComponent {
 
     this.$ProductSubscription = this.productService.getProducts().subscribe({
       next: (products) => {
-        this.products = this.filterProducts = products.sort((a, b) =>
+        this.products = this.filterProducts = products.map((product)=>{
+          product.title = product.title.toLowerCase()
+          return product
+        })
+        .sort((a, b) =>
           a.title > b.title ? 1 : b.title > a.title ? -1 : 0
         ); //store array sorted in ascending order of names
 
@@ -120,10 +124,15 @@ export class ProductlistComponent {
           length: this.productsLength,
         });
       },
-      error: (er) => {
-        //hide loader
-        this.ngxspinner.hide();
-        this.spinner = false;
+      error: (error) => {
+        const ErrorDialog =this.dialog.open(ErrorDialogComponent)
+        ErrorDialog.componentInstance.Error.set(`${error.error.message}. Please check your internet connetion.\n Press 'Close' to try again or please try again in 5 seconds`)
+       ErrorDialog.afterClosed().subscribe(()=>{
+          window.location.reload()
+         //hide loader
+         this.ngxspinner.hide();
+         this.spinner = false;
+       })
       }
     });
 
@@ -133,13 +142,20 @@ export class ProductlistComponent {
       .subscribe((categories) => (this.categories = categories));
   } //end of function
 
+
   ngOnDestroy() {
     this.$ProductSubscription.unsubscribe();
     this.$CategorySubscription.unsubscribe();
   }
 
+
   onPageChange(e: PageEvent) {
-    let products: Product[];//temporary holder
+
+    //temporary holder
+    let products: Product[];
+
+    //search holder
+    let search = this.search.toLowerCase()
 
     if (this.category != '' && this.search == '') {//if category is not empty and search is empty
       
@@ -149,11 +165,12 @@ export class ProductlistComponent {
           ? product.category.includes(this.category)
           : product.category.indexOf(this.category) == 0
       );
+
     } else if (this.search != '' && this.category == '') {//if category is not empty and search is empty
       
       //store to temp holder title filtered array
       products = this.filterProducts.filter((product) =>
-        product.title.includes(this.search)
+        product.title.includes(search)
       );
 
     } 
@@ -166,24 +183,32 @@ export class ProductlistComponent {
             ? product.category.includes(this.category)
             : product.category.indexOf(this.category) == 0
         )
-        .filter((product) => product.title.includes(this.search));
+        .filter((product) => product.title.includes(search));
+
     } else {
+
       //store to temp holder unfiltered array
       products = this.filterProducts;
-    } //end if
+
+    } //end of if
 
     //paginator element;set attributes dynamically
     if (this.paginator) {
+
       //paginator page index
       this.paginator.pageIndex = e.pageIndex;
+
       //paginator page size
       this.paginator.pageSize = e.pageSize;
+
       //paginator array/data length
       this.paginator.length = products.length;
-    }
+
+    }//end of if
 
     //current start index
     let index = e.pageIndex * e.pageSize;
+
     //current end index
     let endindex = index + e.pageSize;
 
@@ -191,28 +216,46 @@ export class ProductlistComponent {
     this.products = products.slice(index, endindex);
   }
 
+
+  //category selector change event function
   categoryChange(e: string) {
+
     //store category search text
     let category_text = e.indexOf(' ') > 0 ? e.substring(0, e.indexOf(' ')) : e;
 
-    let products;//temp holder
-    if (this.search !== '') {
-        //store to temp holder title filtered array
+    //search holder
+    let search = this.search
+    
+    //temp holder
+    let products;
+    if (this.search !== '' && this.category !== '') {
+
+      //store to temp holder title filtered array
       products = this.filterProducts.filter((product) =>
-        product.title.includes(this.search)
+        product.title.includes(search.toLowerCase())
       );
-    } else {
+
+      //store categor filtered array to current array
+      this.products = products.filter((product) =>
+      category_text == ''
+        ? product.category.includes(category_text)
+        : product.category.indexOf(category_text) == 0
+    );
+    } else if(this.search==""){
+
        //store to temp holder unfiltered array
       products = this.filterProducts;
-    } //end if
 
-    //store categor filtered array to current array
+      //store categor filtered array to current array
     this.products = products.filter((product) =>
       category_text == ''
         ? product.category.includes(category_text)
         : product.category.indexOf(category_text) == 0
     );
+    
+    } //end if
 
+    
     //update current array length
     this.productsLength = this.products.length;
 
@@ -222,9 +265,14 @@ export class ProductlistComponent {
       pageIndex: 0,
       length: this.productsLength,
     });
-  }
 
+  }//end of function
+
+
+
+  //search textfield change event function
   searchProducts(e: string) {
+
     //search text variable;to lowercase
     let search_text = e.toLowerCase();
 
@@ -233,21 +281,24 @@ export class ProductlistComponent {
 
     //if category is not empty
     if (this.category !== '') {
+ 
       //store to temp holder category filtered array
       products = this.filterProducts.filter((product) =>
         this.category == ''
           ? product.category.includes(this.category)
           : product.category.indexOf(this.category) == 0
       );
+
     } else {
+
       //store to temp holder unfiltered array
       products = this.filterProducts;
+
     } //end if
 
+
     //store search text filtered array to current array
-    this.products = products.filter((product) =>
-      product.title.includes(search_text)
-    );
+    this.products = products.filter((product) =>product.title.includes(search_text));
     
     //update current product array length
     this.productsLength = this.products.length;
@@ -258,18 +309,24 @@ export class ProductlistComponent {
       pageIndex: 0,
       length: this.productsLength,
     });
+
   } //end of function
 
   getNextId(obj: any): number {
+
     return (
       Math.max.apply(
         Math,
         obj.map((o: { id: number }) => o.id)
       ) + 1
-    ); ///get next id from array/object list
-  }
+    ); //get next id from array/object list
 
+  }//end of function
+
+
+  //add button event function
   addProduct() {
+
     //open add dialog box
     let addDialog = this.dialog.open(AddEditProductComponent); 
 
@@ -301,6 +358,7 @@ export class ProductlistComponent {
         this.products = this.filterProducts = prods.sort((a, b) =>
           a.title > b.title ? 1 : b.title > a.title ? -1 : 0
         );
+
         // update products array length
         this.productsLength = this.products.length;
 
@@ -310,13 +368,19 @@ export class ProductlistComponent {
           pageIndex: 0,
           length: this.productsLength,
         });
+
       } //end of if
+      
     }); //end of subscription
+
   } //end of function
 
+
+  //edit button event function
   editProduct(prod: Product) {
     //open a dialog box
     let editDialog = this.dialog.open(AddEditProductComponent); 
+
     //set the input variable within it's instance
     editDialog.componentInstance.product.set(prod);
 
@@ -324,18 +388,23 @@ export class ProductlistComponent {
     editDialog.afterClosed().subscribe((result: any) => {
 
       if (result != null && typeof result == 'string') {
+
         //open dialog box for error
         let errorDialog = this.dialog.open(ErrorDialogComponent); 
+
         //set input variable within dialog instance
         errorDialog.componentInstance.Error.set(result); 
 
       } else if (result != null) {
-        let changedProducts: Product[] = []; //temporary holder array
+
+         //temporary holder array
+        let changedProducts: Product[] = [];
 
          //map product array
         this.products.map((product) => {
          
-          let new_prod = result; //product result from edit dialog
+          //product result from edit dialog
+          let new_prod = result; 
 
            //if product result matches current product
           if (product.id === prod.id) {
@@ -355,13 +424,17 @@ export class ProductlistComponent {
           }
         }); //end of map function
 
-        this.products = this.filterProducts = changedProducts; //store changed array
+        //store changed array
+        this.products = this.filterProducts = changedProducts; 
       }
     }); //end of subscription
   } //end of function
 
+
+  //delete button event function
   deleteProduct(product: Product) {
-    let deleteProd = this.filterProducts; //temp holder
+    //temp holder
+    let deleteProd = this.filterProducts; 
 
     //store filtered array
     this.products = this.filterProducts = deleteProd.filter(
@@ -386,4 +459,5 @@ export class ProductlistComponent {
       relativeTo: this.activeRoute.parent,
     });
   } //end of function
+
 }

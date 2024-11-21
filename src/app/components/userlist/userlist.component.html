@@ -9,7 +9,8 @@
     </div>
     <!-- show on large tablets and laptops or computers -->
     <div class="hide-on-med-and-down" >
-      @if(users){
+   
+     
         <table  mat-elevation-z4  matSort  (matSortChange)="sortUsers($event)">
           <tbody>
             <!-- table headers -->
@@ -22,10 +23,10 @@
                   <th mat-sort-header="role">Role</th>
                 </tr>
               
-                @for(user of users;track user.id){
+                @for(user of users();track user.id){
            <!-- table data -->
                   <tr  class="blue user-item"  *ngIf="!user.admin">
-                    <td class="center-align">{{ user.id }}.</td>
+                    <td class="center-align"> {{admin.id > user.id ? user.id : user.id-1}}.</td>
                     <td>{{user.name.firstname|capitalLetter}}</td>
                     <td>{{user.name.lastname|capitalLetter}}</td>
                     <td>{{user.email}}</td>
@@ -35,22 +36,27 @@
                 }
           </tbody>
         </table>
-      }
+       
+      
     </div>
 
     <!-- show on small tablets and mobile phones -->
     <div class="user-list show-on-medium-and-down hide-on-med-and-up">
-    @for(user of users;track user.id){
-      <!-- list of users -->
-      <div *ngIf="!user.admin" class="user-container">
-        <p class="user-name">  {{user.id-1}}. {{user.name.firstname|capitalLetter}}  {{user.name.lastname|capitalLetter}}</p>
-        <div  class="user-item">
-            <p class="user-name detail"><b>Username</b>: {{user.username}}</p>
-            <p class="user-email detail"><b>Email</b>: {{user.email}}</p>
-            <p class="user-number detail"><b>Role</b>: {{user.admin?"Admin":"User"}}</p>
+
+
+ 
+      @for(user of users();track user.id){
+        <!-- list of users -->
+        <div *ngIf="!user.admin" class="user-container">
+          <p class="user-name">  {{admin.id > user.id ? user.id : user.id-1}}. {{user.name.firstname|capitalLetter}}  {{user.name.lastname|capitalLetter}}</p>
+          <div  class="user-item">
+              <p class="user-name detail"><b>Username</b>: {{user.username}}</p>
+              <p class="user-email detail"><b>Email</b>: {{user.email}}</p>
+              <p class="user-number detail"><b>Role</b>: {{user.admin?"Admin":"User"}}</p>
+          </div>
         </div>
-      </div>
-    }
+      }
+     
     </div>
     
 </div>

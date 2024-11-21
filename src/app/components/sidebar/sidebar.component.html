@@ -1,7 +1,7 @@
 <!-- admi user header -->
 <div class="nav-header">
     <mat-icon [class.sizeup]="collapsed()" matListItemIcon> account_circle</mat-icon>
-    <h3 *ngIf="collapsed()">Name : {{user_name|capitalLetter}} {{user_surname|capitalLetter}}</h3>
+    <h3 *ngIf="collapsed()">Name : {{user_name()|capitalLetter}} {{user_surname()|capitalLetter}}</h3>
     <p *ngIf="collapsed()">Position: Admin</p>
 </div>
 <!-- material design list -->
