@@ -154,4 +154,4 @@ ng serve
 
 Check out my deployed application
 
-[Live Preview Fakestore Manegement App](https://tsexpressrestapi.onrender.com/api/users) 
+[Live Preview Fakestore Manegement App]([https://tsexpressrestapi.onrender.com/api/users](https://store-admin-management-system.vercel.app)) 
