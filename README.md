@@ -65,11 +65,10 @@ ng serve
 
 # Screenshots
 ## Login
-![Login Screen](/src/assets/images/login.PNG)
+![Login Screen](/src/assets/login.PNG)
+## Login Validatin
+![Login Validation Screen](/src/assets/login-form-error.PNG)
 
-![Login Validation Screen](/src/assets/images/login-form-error.PNG)
-
-![Login Input Screen](/src/assets/images/login-input.PNG)
 
 ## Admin Dashboard
 
